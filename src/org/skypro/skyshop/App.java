@@ -1,27 +1,29 @@
 package org.skypro.skyshop;
 
 import org.skypro.skyshop.basket.ProductBasket;
-import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.DiscountedProduct;
+import org.skypro.skyshop.product.FixPriceProduct;
+import org.skypro.skyshop.product.SimpleProduct;
 
 public class App {
     public static void main(String[] args) {
-        // Создаем продукты
-        Product product1 = new Product("Яблоко", 50);
-        Product product2 = new Product("Банан", 30);
-        Product product3 = new Product("Апельсин", 70);
-
         // Создаем корзину
         ProductBasket basket = new ProductBasket();
 
-        // Добавляем продукты в корзину
-        basket.addProduct(product1);
-        basket.addProduct(product2);
-        basket.addProduct(product3);
+        // Создаем товары разных типов
+        SimpleProduct simpleProduct = new SimpleProduct("Яблоко", 50);
+        DiscountedProduct discountedProduct = new DiscountedProduct("Банан", 100, 20); // Банан со скидкой 20%
+        FixPriceProduct fixPriceProduct = new FixPriceProduct("Апельсин"); // Фиксированная цена 100
 
-        // Пытаемся добавить продукт в заполненную корзину
-        basket.addProduct(new Product("Груша", 60));
-        basket.addProduct(new Product("Киви", 40));
-        basket.addProduct(new Product("Манго", 100)); // Должно вывести сообщение о переполнении
+        // Добавляем товары в корзину
+        basket.addProduct(simpleProduct);
+        basket.addProduct(discountedProduct);
+        basket.addProduct(fixPriceProduct);
+
+        // Пытаемся добавить еще один товар (корзина рассчитана на 5 товаров)
+        basket.addProduct(new SimpleProduct("Груша", 60));
+        basket.addProduct(new DiscountedProduct("Киви", 80, 10));
+        basket.addProduct(new FixPriceProduct("Манго")); // Должно вывести сообщение о переполнении корзины
 
         // Печать содержимого корзины
         System.out.println("Содержимое корзины:");
@@ -30,7 +32,7 @@ public class App {
         // Получение общей стоимости корзины
         System.out.println("Общая стоимость корзины: " + basket.getTotalPrice());
 
-        // Поиск товара в корзине
+        // Поиск товара в корзине по имени
         System.out.println("Есть ли в корзине Банан? " + basket.containsProduct("Банан"));
         System.out.println("Есть ли в корзине Манго? " + basket.containsProduct("Манго"));
 
@@ -42,7 +44,7 @@ public class App {
         // Получение стоимости пустой корзины
         System.out.println("Общая стоимость пустой корзины: " + basket.getTotalPrice());
 
-        // Поиск товара в пустой корзине
+        // Поиск товара по имени в пустой корзине
         System.out.println("Есть ли в корзине Яблоко? " + basket.containsProduct("Яблоко"));
     }
 }

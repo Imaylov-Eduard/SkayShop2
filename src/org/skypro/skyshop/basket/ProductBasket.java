@@ -6,7 +6,6 @@ public class ProductBasket {
     private final Product[] products; // Массив для хранения продуктов
     private int count;                // Количество добавленных продуктов
 
-    // Конструктор для инициализации корзины
     public ProductBasket() {
         this.products = new Product[5]; // Корзина вмещает до 5 продуктов
         this.count = 0;
@@ -36,10 +35,15 @@ public class ProductBasket {
         if (count == 0) {
             System.out.println("В корзине пусто.");
         } else {
+            int specialCount = 0;
             for (int i = 0; i < count; i++) {
-                System.out.println(products[i].getName() + ": " + products[i].getPrice());
+                System.out.println(products[i].toString());
+                if (products[i].isSpecial()) {
+                    specialCount++;
+                }
             }
             System.out.println("Итого: " + getTotalPrice());
+            System.out.println("Специальных товаров: " + specialCount);
         }
     }
 
